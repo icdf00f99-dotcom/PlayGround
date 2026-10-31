@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#160b24">
+<meta name="description" content="Adana'da iki çift, bir kafe ve tek bir kasa. Mobil için tasarlanmış randevu-soygun oyunu.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Aşk & Soygun · Adana</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <div class="ambient" aria-hidden="true"></div>
+
+  <!-- ============ TITLE ============ -->
+  <section class="screen" id="screen-title">
+    <div class="title-art" id="titleArt" aria-hidden="true"></div>
+    <div class="title-vignette" aria-hidden="true"></div>
+    <div class="floating-shapes" aria-hidden="true">
+      <span class="float f1">♥</span>
+      <span class="float f2">₺</span>
+      <span class="float f3">♥</span>
+      <span class="float f4">✦</span>
+    </div>
+    <div class="title-wrap">
+      <div class="title-eyebrow"><span class="live-dot"></span> ADANA · 19:40 · TAŞKÖPRÜ</div>
+      <h1 class="logo" aria-label="Aşk ve Soygun">
+        <span class="logo-line"><span class="logo-word">AŞK</span><span class="logo-amp">&amp;</span></span>
+        <span class="logo-line"><span class="logo-word logo-word-2">SOYGUN</span></span>
+      </h1>
+      <p class="tagline">İki çift. Bir kafe. Sıfır para.</p>
+      <p class="title-sub">Bir randevuda her şey yolunda gidebilir.<br>Ya da kasa açık kalır.</p>
+      <button class="cta cta-main" id="startBtn" type="button">
+        <span>MASAYA OTUR</span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </button>
+      <div class="title-foot">
+        <button class="ghost-btn" id="endingsBtn" type="button">
+          <span>SONLAR</span><b id="endingCount">0/6</b>
+        </button>
+        <span class="foot-dot" aria-hidden="true">·</span>
+        <button class="ghost-btn" id="soundBtn" type="button" aria-pressed="true">
+          <span id="soundLabel">SES AÇIK</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAST ============ -->
+  <section class="screen" id="screen-cast">
+    <div class="topbar">
+      <button class="icon-btn" id="castBack" type="button" aria-label="Geri">←</button>
+      <span class="step-tag">01 / 03</span>
+    </div>
+    <div class="scroll-area">
+      <div class="screen-head">
+        <p class="eyebrow">KADRO</p>
+        <h2>Bu akşam sen kimsin?</h2>
+        <p class="lede">Dört kişi, iki randevu, tek masa. Seçtiğin kişi olarak oynarsın; sevgilin ve diğer çift sana eşlik eder.</p>
+      </div>
+      <div class="cast-grid" id="castGrid"></div>
+      <div class="cast-note" id="castNote">
+        <div class="cast-note-icon">♥</div>
+        <div>
+          <strong>Birini seç.</strong>
+          <p>Her karakterin soygunda farklı bir avantajı var.</p>
+        </div>
+      </div>
+      <div class="cast-tips" aria-hidden="true">
+        <div class="cast-tip"><span>❤️</span><b>KİMYA</b><p>Randevunla arandaki çekim.</p></div>
+        <div class="cast-tip"><span>🤝</span><b>ORTAKLIK</b><p>Diğer çiftin sana güveni.</p></div>
+        <div class="cast-tip"><span>👁️</span><b>ŞÜPHE</b><p>Kafenin seni fark etmesi.</p></div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="cta" id="castNext" type="button" disabled>
+        <span>MASAYA GEÇ</span><span class="cta-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ DATE ============ -->
+  <section class="screen" id="screen-date">
+    <header class="hud" aria-label="İlişki durumları">
+      <div class="stat" data-stat="kimya">
+        <div class="stat-top"><span class="stat-ico">❤️</span><span class="stat-name">KİMYA</span><b class="stat-num" id="kimyaVal">35</b></div>
+        <div class="stat-bar"><i id="kimyaBar"></i></div>
+      </div>
+      <div class="stat" data-stat="ortaklik">
+        <div class="stat-top"><span class="stat-ico">🤝</span><span class="stat-name">ORTAKLIK</span><b class="stat-num" id="ortaklikVal">25</b></div>
+        <div class="stat-bar"><i id="ortaklikBar"></i></div>
+      </div>
+      <div class="stat" data-stat="suphe">
+        <div class="stat-top"><span class="stat-ico">👁️</span><span class="stat-name">ŞÜPHE</span><b class="stat-num" id="supheVal">0</b></div>
+        <div class="stat-bar"><i id="supheBar"></i></div>
+      </div>
+    </header>
+
+    <div class="scene" id="dateScene">
+      <div class="scene-art" id="sceneArt" aria-hidden="true"></div>
+      <div class="scene-tag" id="sceneTag">19:40 · Taşköprü Kahvesi</div>
+      <div class="cast-row" id="castRow"></div>
+    </div>
+
+    <div class="dialog" id="dialog">
+      <div class="dialog-ghost" id="dialogGhost" aria-hidden="true"></div>
+      <div class="speaker" id="speaker">
+        <span class="speaker-dot" id="speakerDot"></span>
+        <span id="speakerName">Anlatıcı</span>
+      </div>
+      <p class="dialog-text" id="dialogText" aria-live="polite"></p>
+      <div class="choice-label" id="choiceLabel" hidden>Ne diyeceksin?</div>
+      <div class="choices" id="choices"></div>
+      <div class="dialog-actions" id="dialogActions"></div>
+      <div class="tap-hint" id="tapHint" aria-hidden="true"><span>devam</span><span class="tap-caret">▾</span></div>
+    </div>
+  </section>
+
+  <!-- ============ PLAN ============ -->
+  <section class="screen" id="screen-plan">
+    <div class="topbar">
+      <button class="icon-btn" id="planBack" type="button" aria-label="Geri">←</button>
+      <span class="step-tag">02 / 03</span>
+    </div>
+    <div class="scroll-area">
+      <div class="screen-head">
+        <p class="eyebrow">PEÇETEDEKİ PLAN</p>
+        <h2>Kafeyi nasıl soyuyoruz?</h2>
+        <p class="lede" id="planLede">Garson, kasa ve dört cesur insan. Bir plan seç.</p>
+      </div>
+      <div class="plan-list" id="planList"></div>
+      <div class="plan-note" id="planNote"></div>
+    </div>
+    <div class="bottom-bar">
+      <button class="cta" id="heistStart" type="button" disabled>
+        <span>SOYGUNU BAŞLAT</span><span class="cta-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ HEIST ============ -->
+  <section class="screen" id="screen-heist">
+    <div class="heist-bg" id="heistBg" aria-hidden="true"></div>
+    <div class="heist-shade" aria-hidden="true"></div>
+    <div class="heist-wrap">
+      <div class="heist-top">
+        <span class="round-tag" id="roundTag">GÖREV 01 / 05</span>
+        <span class="loot-tag"><span class="loot-ico">₺</span> <b id="lootVal">0</b></span>
+      </div>
+      <div class="heist-title-wrap">
+        <h2 id="heistTitle">Garsonu oyala</h2>
+        <p class="heist-hint" id="heistHint">İbre yeşil bölgedeyken dokun.</p>
+      </div>
+
+      <div class="gauge" id="gauge">
+        <svg viewBox="0 0 240 240" class="gauge-svg" aria-hidden="true">
+          <circle class="gauge-track" cx="120" cy="120" r="96"></circle>
+          <circle class="gauge-zone" id="gaugeZone" cx="120" cy="120" r="96" pathLength="100" transform="rotate(-90 120 120)"></circle>
+          <circle class="gauge-inner" cx="120" cy="120" r="76"></circle>
+          <g id="needle" transform="rotate(0 120 120)">
+            <line x1="120" y1="120" x2="120" y2="40" class="needle-line"></line>
+            <circle cx="120" cy="40" r="5.5" class="needle-tip"></circle>
+          </g>
+          <circle cx="120" cy="120" r="9" class="needle-hub"></circle>
+        </svg>
+        <button id="tapBtn" class="gauge-btn" type="button" aria-label="İbre yeşil bölgedeyken dokun">
+          <span class="gauge-btn-big">DOKUN</span>
+          <span class="gauge-btn-small">zamanlama</span>
+        </button>
+        <div class="gauge-flash" id="gaugeFlash" aria-hidden="true"></div>
+        <div class="gauge-pop" id="gaugePop" aria-hidden="true"></div>
+      </div>
+
+      <div class="timebar" aria-hidden="true"><i id="timeBar"></i></div>
+
+      <div class="suspicion" id="suspicionWrap">
+        <div class="susp-top"><span>ŞÜPHE</span><b id="suspVal">0</b></div>
+        <div class="susp-bar"><i id="suspBar"></i></div>
+      </div>
+
+      <div class="heist-msg" id="heistMsg" aria-live="polite"></div>
+
+      <div class="heist-foot">
+        <div class="combo" id="combo"><span>KOMBO</span><b>×0</b></div>
+        <button class="support-btn" id="supportBtn" type="button">
+          <span class="support-ico">♥</span>
+          <span>PARTNER DESTEĞİ</span>
+          <b id="supportCount">×2</b>
+        </button>
+      </div>
+    </div>
+
+    <div class="overlay" id="heistIntro">
+      <div class="brief-card">
+        <p class="eyebrow">SOYGUN BRİFİ</p>
+        <h3 id="briefTitle">Tatlı Krizi</h3>
+        <p class="brief-desc" id="briefDesc"></p>
+        <div class="brief-rows" id="briefRows"></div>
+        <div class="brief-note">
+          <span class="brief-note-ico">👆</span>
+          <p>İbre yeşil bölgeden geçerken dokun. 5 görevde kasayı boşalt. Şüphe 100 olursa yakalanırsın.</p>
+        </div>
+        <button class="cta" id="beginHeist" type="button"><span>BAŞLA</span><span class="cta-arrow">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="screen-result">
+    <div class="scroll-area result-scroll">
+      <div class="result-top">
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+        <div class="result-portraits" id="resultPortraits" aria-hidden="true"></div>
+        <div class="stamp" id="resultStamp">TEMİZ ÇIKIŞ</div>
+      </div>
+
+      <div class="result-body">
+        <p class="eyebrow" id="endingTag">SON 01 / 06</p>
+        <h2 class="ending-title" id="endingTitle">Efsane Çift</h2>
+        <p class="ending-quote" id="endingQuote">“Bir daha ki randevu benden.”</p>
+        <p class="ending-text" id="endingText"></p>
+
+        <div class="money-card" id="moneyCard">
+          <span class="money-label" id="moneyLabel">KASADAN ÇIKAN</span>
+          <div class="money"><span>₺</span><b id="finalLoot">0</b></div>
+          <div class="stars" id="stars" aria-label="Başarı"></div>
+        </div>
+
+        <div class="result-stats" id="resultStats"></div>
+
+        <div class="result-actions">
+          <button class="cta" id="replayBtn" type="button"><span>AYNI EKİPLE TEKRAR</span><span class="cta-arrow">↻</span></button>
+          <div class="result-subactions">
+            <button class="ghost-btn" id="resultCast" type="button">KADROYU DEĞİŞTİR</button>
+            <button class="ghost-btn" id="resultEndings" type="button">SONLAR <b id="resultEndingCount">0/6</b></button>
+          </div>
+        </div>
+
+        <div class="result-progress" aria-label="Son arşivi ilerlemesi">
+          <div class="result-progress-head"><span>SON ARŞİVİ</span><b id="resultProgressCount">0/6</b></div>
+          <div class="result-dots" id="resultDots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENDINGS ============ -->
+  <section class="screen" id="screen-endings">
+    <div class="topbar">
+      <button class="icon-btn" id="endingsBack" type="button" aria-label="Geri">←</button>
+      <span class="step-tag">ARŞİV</span>
+    </div>
+    <div class="scroll-area">
+      <div class="screen-head">
+        <p class="eyebrow">SONLAR</p>
+        <h2>Kaç türlü kaçtınız?</h2>
+        <p class="lede">Her oynayışta farklı bir son açılır. Altısını da gör.</p>
+      </div>
+      <div class="endings-grid" id="endingsGrid"></div>
+      <div class="best-line" id="bestLine"></div>
+    </div>
+  </section>
+
+  <div class="grain" aria-hidden="true"></div>
+</div>
+
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
